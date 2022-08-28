@@ -27,6 +27,6 @@ app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/news", newRoute);
 
-app.listen(3000, () => {
+app.listen(process.env.PORT || 3000, () => {
 	console.log("Backend server is running!");
 });
