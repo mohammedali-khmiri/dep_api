@@ -34,10 +34,6 @@ const StudentSchema = new mongoose.Schema(
 			type: Number,
 			require: true,
 		},
-		domaine: {
-			type: Array,
-			require: true,
-		},
 		class: {
 			type: Array,
 			require: true,

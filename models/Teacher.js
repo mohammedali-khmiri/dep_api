@@ -31,7 +31,7 @@ const TeacherSchema = new mongoose.Schema(
 			require: true,
 		},
 		grade: {
-			type: String,
+			type: Array,
 			require: true,
 		},
 	},

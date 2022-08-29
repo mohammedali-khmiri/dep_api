@@ -1,12 +1,37 @@
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
-const { query } = require("express");
 const User = require("../models/User");
 const {
 	verifyToken,
 	verifyTokenAndAuthorization,
 	verifyTokenAndAdmin,
 } = require("./verifyToken");
+
+//GET USER STATS
+router.get("/stats", verifyTokenAndAdmin, async (req, res) => {
+	const date = new Date();
+	const lastYear = new Date(date.setFullYear(date.getFullYear() - 1));
+
+	try {
+		const data = await User.aggregate([
+			{ $match: { createdAt: { $gte: lastYear } } },
+			{
+				$project: {
+					month: { $month: "$createdAt" },
+				},
+			},
+			{
+				$group: {
+					_id: "$month",
+					total: { $sum: 1 },
+				},
+			},
+		]);
+		res.status(200).json(data);
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
 
 //update user
 router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
@@ -36,7 +61,7 @@ router.put("/:id", verifyTokenAndAuthorization, async (req, res) => {
 //delete user
 router.delete("/:id", verifyTokenAndAuthorization, async (req, res) => {
 	try {
-		const user = await User.findByIdAndDelete(req.params.id);
+		await User.findByIdAndDelete(req.params.id);
 		res.status(200).json("User has been deleted");
 	} catch (err) {
 		return res.status(500).json(err);
@@ -63,33 +88,6 @@ router.get("/", verifyTokenAndAdmin, async (req, res) => {
 			: await User.find();
 
 		res.status(200).json(users);
-	} catch (err) {
-		res.status(500).json(err);
-	}
-});
-
-//GET USER STATS
-
-router.get("/stat", verifyTokenAndAdmin, async (req, res) => {
-	const date = new Date();
-	const lastYear = new Date(date.setFullYear(date.getFullYear() - 1));
-
-	try {
-		const data = await User.aggregate([
-			{ $match: { createdAt: { $gte: lastYear } } },
-			{
-				$project: {
-					month: { $month: "$createdAt" },
-				},
-			},
-			{
-				$group: {
-					_id: "$month",
-					total: { $sum: 1 },
-				},
-			},
-		]);
-		res.status(200).json(data);
 	} catch (err) {
 		res.status(500).json(err);
 	}
