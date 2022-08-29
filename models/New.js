@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 
 const NewSchema = new mongoose.Schema(
 	{
-		userId: {
+	
+		title: {
 			type: String,
-			required: true,
 		},
 		desc: {
 			type: String,

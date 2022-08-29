@@ -1,9 +1,13 @@
 const router = require("express").Router();
-const { json } = require("express");
 const New = require("../models/New");
+const {
+	verifyToken,
+	verifyTokenAndAuthorization,
+	verifyTokenAndAdmin,
+} = require("./verifyToken");
 
 //create news
-router.post("/", async (req, res) => {
+router.post("/", verifyTokenAndAdmin, async (req, res) => {
 	const newNews = new New(req.body);
 	try {
 		const savedNew = await newNews.save();
@@ -14,30 +18,24 @@ router.post("/", async (req, res) => {
 });
 
 //update news
-router.put("/:id", async (req, res) => {
+router.put("/:id", verifyTokenAndAdmin, async (req, res) => {
 	try {
 		const news = await New.findById(req.params.id);
-		if (news.userId === req.body.userId) {
-			await news.updateOne({ $set: req.body });
-			res.status(200).json("news has been updated");
-		} else {
-			res.status(403).json("You can update only you news");
-		}
+
+		await news.updateOne({ $set: req.body });
+		res.status(200).json("news has been updated");
 	} catch (err) {
 		res.status(500).json(err);
 	}
 });
 
 //delete news
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
 	try {
 		const news = await New.findById(req.params.id);
-		if (news.userId === req.body.userId) {
-			await news.deleteOne();
-			res.status(200).json("news has been deleted");
-		} else {
-			res.status(403).json("You can delete only you news");
-		}
+
+		await news.deleteOne();
+		res.status(200).json("news has been deleted");
 	} catch (err) {
 		res.status(500).json(err);
 	}
@@ -60,7 +58,7 @@ router.put("/:id/like", async (req, res) => {
 });
 
 //get one news
-router.get("/:id", async (req, res) => {
+router.get("/:id",verifyToken , async (req, res) => {
 	try {
 		const news = await New.findById(req.params.id);
 		res.status(200).json(news);
