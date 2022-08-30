@@ -12,6 +12,9 @@ const TeacherSchema = new mongoose.Schema(
 			require: true,
 			unique: true,
 		},
+		img: {
+			type: String,
+		},
 		email: {
 			type: String,
 			require: true,
@@ -31,6 +34,10 @@ const TeacherSchema = new mongoose.Schema(
 			require: true,
 		},
 		grade: {
+			type: Array,
+			require: true,
+		},
+		specialty: {
 			type: Array,
 			require: true,
 		},

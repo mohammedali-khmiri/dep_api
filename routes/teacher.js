@@ -55,7 +55,7 @@ router.get("/:id", verifyTokenAndAdmin, async (req, res) => {
 });
 
 //get all Teacher
-router.get("/", verifyTokenAndAdmin, async (req, res) => {
+router.get("/", async (req, res) => {
 	const qNew = req.query.new;
 	const qGrade = req.query.grade;
 	try {

@@ -58,7 +58,7 @@ router.put("/:id/like", async (req, res) => {
 });
 
 //get one news
-router.get("/:id",verifyToken , async (req, res) => {
+router.get("/:id", verifyToken, async (req, res) => {
 	try {
 		const news = await New.findById(req.params.id);
 		res.status(200).json(news);
