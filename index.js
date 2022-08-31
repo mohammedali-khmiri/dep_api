@@ -10,6 +10,7 @@ const newRoute = require("./routes/news");
 const studentRoute = require("./routes/student");
 const teacherRoute = require("./routes/teacher");
 const noteRoute = require("./routes/notes");
+const cors = require("cors");
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ mongoose
 	});
 
 //middleware
+app.use(cors());
 app.use(express.json());
 app.use(helmet());
 app.use(morgan("common"));
