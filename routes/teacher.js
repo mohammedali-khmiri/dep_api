@@ -44,7 +44,7 @@ router.delete("/:id", verifyTokenAndAdmin, async (req, res) => {
 });
 
 //get one Teacher
-router.get("/:id", verifyTokenAndAdmin, async (req, res) => {
+router.get("/:id", async (req, res) => {
 	try {
 		const teacher = await Teacher.findById(req.params.id);
 		// const { nCin, updatedAt, ...others } = student._doc;
