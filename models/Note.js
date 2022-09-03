@@ -6,6 +6,10 @@ const NoteSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
+		nameStud: {
+			type: String,
+			required: true,
+		},
 		dateSou: {
 			type: Date,
 			required: true,
