@@ -38,6 +38,9 @@ const StudentSchema = new mongoose.Schema(
 			type: Array,
 			require: true,
 		},
+		img: {
+			type: String,
+		},
 	},
 	{ timestamps: true }
 );

@@ -55,7 +55,7 @@ router.get("/:id", verifyTokenAndAdmin, async (req, res) => {
 });
 
 //get all student
-router.get("/", verifyTokenAndAdmin, async (req, res) => {
+router.get("/", async (req, res) => {
 	const qNew = req.query.new;
 	const qClass = req.query.class;
 	try {

@@ -81,7 +81,7 @@ router.get("/:userId", verifyTokenAndAuthorization, async (req, res) => {
 });
 
 //get all note / order by newest,dateSou, typeStage
-router.get("/", verifyTokenAndAdmin, async (req, res) => {
+router.get("/", async (req, res) => {
 	const qNew = req.query.new;
 	const qDateSou = req.query.dateSou;
 	const qTypeStage = req.query.typeStage;

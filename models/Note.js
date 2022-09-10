@@ -4,9 +4,12 @@ const NoteSchema = new mongoose.Schema(
 	{
 		num: {
 			type: String,
+		},
+		fnameStud: {
+			type: String,
 			required: true,
 		},
-		nameStud: {
+		lnameStud: {
 			type: String,
 			required: true,
 		},
