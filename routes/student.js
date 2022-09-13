@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Student = require("../models/Student");
+const bcrypt = require("bcrypt");
 const {
 	verifyToken,
 	verifyTokenAndAuthorization,
@@ -16,6 +17,8 @@ router.post("/addStudent", verifyTokenAndAdmin, async (req, res) => {
 		res.status(500).json(err);
 	}
 });
+
+
 
 //UPDATE STUDENT
 router.put("/:id", verifyTokenAndAdmin, async (req, res) => {

@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const User = require("../models/User");
+const Student = require("../models/Student");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -19,6 +20,33 @@ router.post("/register", async (req, res) => {
 		//save user and respond
 		const user = await newUser.save();
 		res.status(200).json(user);
+	} catch (err) {
+		res.status(500).json(err);
+	}
+});
+
+//REGISTER Student
+router.post("/studentRegister", async (req, res) => {
+	try {
+		//generate new password
+		const salt = await bcrypt.genSalt(10);
+		const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
+		//create new user
+		const newStudent = await new Student({
+			firstName: req.body.firstName,
+			lastName: req.body.lastName,
+			nCin: req.body.nCin,
+			nInscription: req.body.nInscription,
+			phone: req.body.phone,
+			address: req.body.address,
+			class: req.body.class,
+			email: req.body.email,
+			password: hashedPassword,
+		});
+		//save user and respond
+		const student = await newStudent.save();
+		res.status(200).json(student);
 	} catch (err) {
 		res.status(500).json(err);
 	}
