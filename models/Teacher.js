@@ -21,6 +21,10 @@ const TeacherSchema = new mongoose.Schema(
 			max: 50,
 			unique: true,
 		},
+		password: {
+			type: String,
+			require: true,
+		},
 		address: {
 			type: String,
 			require: true,
